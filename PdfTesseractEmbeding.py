@@ -9,6 +9,7 @@ PdtTesseractEmbedding.py "<path/to/file>" "<3 letter language code>"
 
 Example:
 PdtTesseractEmbedding.py "C:\Scans\Document_inNorwegian.pdf" "nor"
+PdtTesseractEmbedding.py "C:\Scans\Document_inEnglish.pdf"
 
 """
 
@@ -24,8 +25,8 @@ from tqdm import tqdm
 # Cmd line args
 file =  sys.argv[1] #r'.\ActivityCoefficientsinHNO3-H2S04-H2OMixtures.pdf' #
 
-lang = 'en'
-if sys.argv[2]:
+lang = 'eng'
+if len( sys.argv) > 2:
     lang = sys.argv[2]
 # Check for and create img directory
 imgDirectory = os.getcwd() + "/images"
