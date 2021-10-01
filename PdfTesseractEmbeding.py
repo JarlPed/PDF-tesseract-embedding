@@ -3,6 +3,13 @@
 Created on Thu Aug 26 10:50:49 2021
 
 @author: jarl.robert.pedersen
+
+Usage:
+PdtTesseractEmbedding.py "<path/to/file>" "<3 letter language code>"
+
+Example:
+PdtTesseractEmbedding.py "C:\Scans\Document_inNorwegian.pdf" "nor"
+
 """
 
 from PIL import Image
@@ -15,8 +22,11 @@ from PyPDF2 import PdfFileWriter, PdfFileReader
 from tqdm import tqdm
 
 # Cmd line args
-file = r'.\ActivityCoefficientsinHNO3-H2S04-H2OMixtures.pdf' #sys.argv[1]
+file =  sys.argv[1] #r'.\ActivityCoefficientsinHNO3-H2S04-H2OMixtures.pdf' #
 
+lang = 'en'
+if sys.argv[2]:
+    lang = sys.argv[2]
 # Check for and create img directory
 imgDirectory = os.getcwd() + "/images"
 try:
@@ -26,7 +36,7 @@ except:
 
 # Convert PDF pages to JPG images
 print("Converting PDF pages to PNG images...")
-pages = convert_from_path(file, 200, poppler_path = r"C:\Program Files\poppler-21.08.0\Library\bin" )
+pages = convert_from_path(file, 100, poppler_path = r"C:\Program Files\poppler-21.09.0\Library\bin" )
 tqdm1 = tqdm(total=len(pages))
 for i, page in enumerate(pages):
     page.save("images/page" + str(i) + ".png", 'PNG')
@@ -46,7 +56,7 @@ for i in tqdm( range(0, len(pages)) ):
 
     # Convert JPG to PDF page
     f = open("images/page" + str(i) + ".pdf", mode='wb')
-    f.write(pytesseract.image_to_pdf_or_hocr(Image.open("images/page" + str(i) + ".png")))
+    f.write(pytesseract.image_to_pdf_or_hocr(Image.open("images/page" + str(i) + ".png"), lang =lang ))
     f.close()
     PagesPdf.append(f.name)
 
