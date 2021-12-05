@@ -52,6 +52,24 @@ try:
 except:
     os.mkdir(imgDirectory)   
 
+
+
+
+F = open(file, "rb")
+InputPDF = PdfFileReader(F)
+OutputPDF = PdfFileWriter()
+
+for page_i in range(InputPDF.pages):
+    OutputPDF.addPage(pytesseract.image_to_pdf_or_hocr(InputPDF.getPage(page_i), lang =lang ))
+
+F.close()
+G = open(file.replace('.pdf', '_OCR.pdf'), 'wb')
+
+OutputPDF.write(G)
+G.close()
+
+
+"""
 # Convert PDF pages to JPG images
 print("Converting PDF pages to PNG images...")
 pages = convert_from_path(file, 100, poppler_path = r"C:\Program Files\poppler-21.09.0\Library\bin" )
@@ -62,7 +80,6 @@ for i, page in enumerate(pages):
 tqdm1.clear()
 tqdm1.close()
 PagesPdf = []
-
 # If you don't have tesseract executable in your PATH, include the following:
 pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
@@ -90,6 +107,7 @@ f.close()
 
 # Clean img directory
 shutil.rmtree(imgDirectory)
+"""
 """
 print("Cleaning Images Directory...")
 for filename in os.listdir(imgDirectory):
