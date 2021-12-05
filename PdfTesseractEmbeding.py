@@ -22,6 +22,23 @@ from pdf2image import convert_from_path
 from PyPDF2 import PdfFileWriter, PdfFileReader
 from tqdm import tqdm
 
+
+
+
+"""
+with io.open(path, mode="rb") as f:
+    input_pdf = PdfFileReader(f)
+    media_box = input_pdf.getPage(0).mediaBox
+
+min_pt = media_box.lowerLeft
+max_pt = media_box.upperRight
+
+pdf_width = max_pt[0] - min_pt[0]
+pdf_height = max_pt[1] - min_pt[1]
+"""
+
+
+
 # Cmd line args
 file =  sys.argv[1] #r'.\ActivityCoefficientsinHNO3-H2S04-H2OMixtures.pdf' #
 
@@ -72,6 +89,8 @@ f.close()
 
 
 # Clean img directory
+shutil.rmtree(imgDirectory)
+"""
 print("Cleaning Images Directory...")
 for filename in os.listdir(imgDirectory):
     file_path = os.path.join(imgDirectory, filename)
@@ -82,7 +101,7 @@ for filename in os.listdir(imgDirectory):
             shutil.rmtree(file_path)
     except Exception as e:
         print('Failed to delete %s. Reason: %s' % (file_path, e))
-
+"""
 print("Finished!")
 
 
