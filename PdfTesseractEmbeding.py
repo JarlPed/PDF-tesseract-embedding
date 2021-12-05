@@ -60,7 +60,7 @@ InputPDF = PdfFileReader(F)
 OutputPDF = PdfFileWriter()
 
 for page_i in range(InputPDF.pages):
-    OutputPDF.addPage(pytesseract.image_to_pdf_or_hocr(InputPDF.getPage(page_i), lang =lang ))
+    OutputPDF.addPage(pytesseract.image_to_pdf_or_hocr(InputPDF.getPage(page_i).mediabox, lang =lang ))
 
 F.close()
 G = open(file.replace('.pdf', '_OCR.pdf'), 'wb')
