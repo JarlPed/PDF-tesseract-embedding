@@ -52,7 +52,7 @@ try:
 except:
     os.mkdir(imgDirectory)   
 
-
+pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tesseract.exe'
 
 
 F = open(file, "rb")
