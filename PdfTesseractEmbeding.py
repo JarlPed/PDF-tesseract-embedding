@@ -20,7 +20,7 @@ import os
 import io
 import shutil
 from pdf2image import convert_from_path
-from PyPDF2 import PdfFileWriter, PdfFileReader, pdf
+from PyPDF2 import PdfFileWriter, PdfFileReader
 from tqdm import tqdm
 
 import tempfile
@@ -28,9 +28,11 @@ import tempfile
 
 
 # Cmd line args
-file =  sys.argv[1] #r'.\ActivityCoefficientsinHNO3-H2S04-H2OMixtures.pdf' #
+file =  sys.argv[1] # r'.\TEST.pdf' # 
 
-lang = 'eng'
+print(file)
+
+lang = 'nor'
 if len( sys.argv) > 2:
     lang = sys.argv[2]
 # Check for and create img directory
