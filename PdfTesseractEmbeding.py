@@ -20,7 +20,7 @@ import os
 import io
 import shutil
 from pdf2image import convert_from_path
-from PyPDF2 import PdfFileWriter, PdfFileReader
+from PyPDF2 import PdfWriter, PdfReader
 from tqdm import tqdm
 
 import tempfile
@@ -44,7 +44,7 @@ pytesseract.pytesseract.tesseract_cmd = r'C:\Program Files\Tesseract-OCR\tessera
 tPath  = tempfile.TemporaryDirectory()
 
 
-Merger = PdfFileWriter()
+Merger = PdfWriter()
 
 
 
@@ -52,8 +52,8 @@ outputFile = open(file.replace('.pdf', '_OCR.pdf'), 'wb')
 # Convert PDF pages to JPG images
 print("Progress of " + file)
 
-pdfRead =  PdfFileReader(file)
-md = pdfRead.getPage(0).mediaBox
+pdfRead =  PdfReader(file)
+md = pdfRead.pages[0].mediabox
 
 pages = convert_from_path(file, 100, fmt="jpeg", poppler_path = r"C:\Program Files\poppler-21.08.0\Library\bin" )
 tqdm1 = tqdm(total=len(pages))
@@ -63,8 +63,8 @@ for i, page in enumerate(pages):
     #page.save("images/page" + str(i) + ".png", 'PNG')
     imageObj =  Image.frombytes('RGB', page.size, page.tobytes())
     g = pytesseract.image_to_pdf_or_hocr(imageObj, lang =lang )
-    #Merger.addPage(PdfFileReader( io.BytesIO( bytes(g) ) ) )
-    #Merger.addPage(PdfFileReader( g ) )
+    #Merger.addPage(PdfReader( io.BytesIO( bytes(g) ) ) )
+    #Merger.addPage(PdfReader( g ) )
     f = open(tPath.name + str(i) + ".pdf", mode='wb')
     f.write(g)
     f.close()
@@ -77,9 +77,9 @@ tqdm1.close()
 
 
 
-merger = PdfFileWriter()
+merger = PdfWriter()
 for pdf in PagesPdf:
-    merger.addPage(PdfFileReader(pdf, 'rb').getPage(0))
+    merger.add_page(PdfReader(pdf, 'rb').pages[0])
 
 f = open(file.replace('.pdf', '_OCR.pdf'), 'wb')
 merger.write(f)
